@@ -50,6 +50,7 @@ body {
   text-align: center; /* Ensure text inside is centered */
 }
 
+
 /* Make sure text elements inside the backdrop are styled correctly */
 .hero-content-backdrop h1 {
   font-size: 3.5rem; /* Slightly adjust size for better fit */
