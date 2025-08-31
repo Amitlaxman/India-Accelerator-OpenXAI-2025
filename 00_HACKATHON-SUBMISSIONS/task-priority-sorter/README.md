@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+PrioritAI ✨
 
-## Getting Started
+🎯 The Problem It Solves
+In our daily lives, we're often faced with an overwhelming list of tasks, leading to decision paralysis. It's difficult to distinguish between what's truly important and what's just "noise." PrioritAI solves this by automating the prioritization process using the Eisenhower Matrix, allowing users to overcome procrastination and focus their energy on tasks that deliver the most impact.
 
-First, run the development server:
+✨ Features
+AI-Powered Task Sorting: Leverages a local Llama 3 model via Ollama to analyze and categorize tasks into four priority levels.
 
-```bash
+Eisenhower Matrix Categories: Sorts tasks into "Urgent & Important," "Important, Not Urgent," "Urgent, Not Important," and "Not Urgent, Not Important."
+
+Detailed Reasoning: The AI provides a brief justification for why each task was assigned its priority.
+
+Dynamic & Animated UI: A beautiful, immersive landing page with an animated starfield background created with HTML5 Canvas.
+
+Smooth Transitions: Features a "warp drive" effect and smooth scrolling for a polished user experience.
+
+Responsive Design: A fully responsive interface that looks great on all devices.
+
+📸 Screenshot
+🛠️ Technologies Used
+Frontend: Next.js (App Router), React, TypeScript
+
+Styling: CSS Modules, Google Fonts (Plus Jakarta Sans)
+
+Animation: HTML5 Canvas for the starfield effect
+
+AI Model: Llama 3
+
+Local AI Server: Ollama
+
+Deployment: Vercel / Netlify
+
+🧗 Challenges Faced
+The primary challenge was ensuring consistent and valid JSON output from the Llama 3 model. The model would occasionally return malformed data or wrap the JSON in conversational text. This was overcome through:
+
+Advanced Prompt Engineering: Iteratively refining the prompt to be extremely specific about the required output format.
+
+Robust Backend Parsing: Implementing resilient backend logic to parse the AI's response, including fallbacks and specific error handling for malformed JSON.
+
+⚙️ Getting Started (Local Development)
+Follow these instructions to get the project running on your local machine.
+
+Prerequisites
+Node.js: v18.0 or later
+
+Ollama: Make sure Ollama is installed and running on your machine. You can download it from ollama.com.
+
+Installation
+Pull the Llama 3 Model:
+Open your terminal and run the following command to download the Llama 3 model:
+
+ollama pull llama3
+
+Clone the Repository:
+
+git clone [https://github.com/your-username/prioritai.git](https://github.com/your-username/prioritai.git)
+cd prioritai
+
+Install Dependencies:
+
+npm install
+
+Run the Development Server:
+Make sure Ollama is running in the background. Then, start the Next.js app:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open the App:
+Navigate to http://localhost:3000 in your browser to see the application.
