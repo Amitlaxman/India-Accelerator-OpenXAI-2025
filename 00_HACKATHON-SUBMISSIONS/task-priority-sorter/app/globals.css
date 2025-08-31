@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
+
 
 :root {
-  --background-start-rgb: 2, 0, 36;
-  --background-end-rgb: 19, 19, 61;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
   --card-bg-color: rgba(255, 255, 255, 0.05);
   --card-border-color: rgba(255, 255, 255, 0.1);
   --text-color: #e0e0e0;
@@ -16,6 +18,11 @@
   --p4-color: #57d9a3; /* Not Urgent, Not Important */
 }
 
+/* --- NEW: Smooth Scroll --- */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: var(--text-color);
   background: linear-gradient(
@@ -23,31 +30,111 @@ body {
     rgb(var(--background-start-rgb)),
     rgb(var(--background-end-rgb))
   );
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   min-height: 100vh;
 }
 
-main {
+.hero-content-backdrop {
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+  backdrop-filter: blur(150px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
+  padding: 2.5rem 3.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  display: flex; /* To center its own content */
+  flex-direction: column;
+  align-items: center;
+  max-width: 700px; /* Limit width to keep it centered */
+  z-index: 1; /* Ensure it's above the stars */
+  text-align: center; /* Ensure text inside is centered */
+}
+
+/* Make sure text elements inside the backdrop are styled correctly */
+.hero-content-backdrop h1 {
+  font-size: 3.5rem; /* Slightly adjust size for better fit */
+  margin-bottom: 0.75rem;
+}
+
+.hero-content-backdrop p {
+  font-size: 1.1rem; /* Slightly adjust size for better fit */
+  margin-bottom: 2rem;
+  max-width: none; /* Override previous max-width to fit backdrop */
+}
+
+
+/* --- NEW: Hero Section for the landing page --- */
+.hero-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  justify-content: center;
+  text-align: center;
   min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  /* Remove width/max-width from hero-section if you had it,
+     let backdrop define the content area now */
 }
 
-h1 {
+.hero-section h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #ffffff, #c0c0c0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  max-width: 800px;
+}
+
+.hero-section p {
+  font-size: 1.25rem;
+  color: #a0a0a0;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+}
+
+.cta-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: white;
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.cta-button:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(138, 43, 226, 0.2);
+}
+
+/* --- UPDATED: App Section for the main tool --- */
+.app-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app-section h2 {
   font-size: 3rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(90deg, #e0e0e0, #b0b0b0);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  text-align: center;
 }
 
-p {
+.app-section .subtitle {
   color: #a0a0a0;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 textarea {
@@ -71,7 +158,7 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3);
 }
 
-button {
+.prioritize-button {
   padding: 0.8rem 2rem;
   font-size: 1.1rem;
   font-weight: 500;
@@ -81,14 +168,15 @@ button {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-button:hover {
+.prioritize-button:hover {
   background-color: var(--primary-hover-color);
   transform: translateY(-2px);
 }
 
-button:disabled {
+.prioritize-button:disabled {
   background-color: #555;
   cursor: not-allowed;
   transform: none;
