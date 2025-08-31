@@ -1,12 +1,22 @@
-import { NextResponse } from "next/server";
+declare module "pdf-parse/lib/pdf-parse.js" {
+  import { Buffer } from "buffer";
 
-export async function POST(req: Request) {
-  try {
-    const pdf = (await import("pdf-parse/lib/pdf-parse.js")).default;
+  interface PDFInfo {
+    numpages: number;
+    numrender: number;
+    info: Record<string, any>;
+    metadata: any;
+    text: string;
+    version: string;
+  }
 
+  function pdf(buffer: Buffer | Uint8Array, options?: any): Promise<PDFInfo>;
+
+  export default pdf;
+}
+    // Parse form data
     const formData = await req.formData();
-    const file = formData.get("resume") as File; // 👈 keep "resume"
-
+    const file = formData.get("resume") as File;
     if (!file) {
       return NextResponse.json({ error: "Resume file missing" }, { status: 400 });
     }
@@ -45,20 +55,21 @@ Format the cover letter properly with:
     // Call Ollama API
     const response = await fetch("http://localhost:11434/api/generate", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: process.env.OLLAMA_MODEL || "mistral:7b-instruct",
-        prompt,
+        prompt
       }),
+      headers: { "Content-Type": "application/json" }
     });
 
+    // Handle fetch errors before reading stream
     if (!response.ok || !response.body) {
       const errMsg = await response.text();
       console.error("Ollama error:", errMsg);
       return NextResponse.json({ error: "Ollama failed" }, { status: 500 });
     }
 
-    // Stream Ollama JSON output
+    // Stream response
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let result = "";
@@ -68,21 +79,24 @@ Format the cover letter properly with:
       if (done) break;
 
       const chunk = decoder.decode(value, { stream: true });
-      for (const line of chunk.split("\n").filter((l) => l.trim())) {
+      const lines = chunk.split("\n").filter(line => line.trim());
+
+      for (const line of lines) {
         try {
           const parsed = JSON.parse(line);
           if (parsed.response) {
             result += parsed.response;
           }
-        } catch {
-          // Ignore non-JSON lines
+        } catch (err) {
+          console.error("Failed to parse line:", line, err);
         }
       }
     }
 
     return NextResponse.json({ coverLetter: result.trim() });
+
   } catch (err) {
-    console.error("API Error:", err);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    console.error("Error generating cover letter:", err);
+    return NextResponse.json({ error: "Failed to generate cover letter" }, { status: 500 });
   }
 }
