@@ -11,15 +11,14 @@ export default function Home() {
   const editor = useEditor({
     extensions: [StarterKit],
     content: "<p>Paste job description and upload resume to generate cover letter...</p>",
-    immediatelyRender: false, // 🚀 FIX: prevents SSR hydration issues
+    immediatelyRender: false, // avoid hydration errors
   });
 
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+    const formData = new FormData(e.currentTarget);
 
     const res = await fetch("/api/generate-cover", {
       method: "POST",
@@ -52,7 +51,6 @@ export default function Home() {
           className="w-full border rounded p-2"
           required
         />
-
         <input type="file" name="resume" accept="application/pdf" required />
 
         <button
@@ -64,7 +62,7 @@ export default function Home() {
         </button>
       </form>
 
-      <div className="border rounded p-4 bg-white shadow">
+      <div className="text-black border rounded p-4 bg-white shadow min-h-[200px]">
         {editor && <EditorContent editor={editor} />}
       </div>
 
